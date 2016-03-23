@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+        <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+         <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+        -->
+        <title>Iphone website search close+open like effects</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /** @keyframes search1{
+                 from{
+                   margin-left:4%;
+                 }
+                 to{
+                   margin-left:0%;
+               }
+             }
+            
+            .my-animation1{
+                animation-name: search1;
+                animation-duration: 2s;
+
+            }
+            */
+            textarea:focus, input:focus{
+                outline: none;
+            }
+            .my-search{
+                //margin-left:2%;
+            }
+            .my-nav-item{
+
+            }
+            .my-nav-item,.my-search{
+                display: inline-block;
+            }
+            .my-btn-close,.my-search-input{
+                display:none;
+            }
+            .my-nav{
+                margin:2%;
+                background-color: black;
+                color:white;
+                display: inline-block;
+                width:100%;
+            }
+            .my-search-input{
+                background-color: black;
+                color:white;
+                border: 0;
+                font-size: 120%;
+                vertical-align: middle;
+            }
+
+            .my-btn-open{
+                vertical-align: middle;
+            }
+            .my-btn-close{
+                vertical-align: middle;
+                float:right;
+                font-size: 120%;
+            }
+            .my-btn-close:hover, .my-btn-open:hover{
+                opacity:0.65;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="my-nav">
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item"> ex </div>
+            <div class="my-nav-item my-search ">
+                <i class="material-icons my-btn-open">search</i>
+                <input class="my-search-input" type="search" placeholder="Search apple.com" />
+            </div>
+            <span class="my-btn-close">x</span>
+        </nav>
+        <footer>
+            <div>
+                <h2>All Right reserved to Yosef Soiferman </h2>
+                <ol>
+                    <li>put in 1 file js+css because it example - more readable </li>
+                    <li>use jquery instead CSS3 to animation to make it work also for IE</li>
+                    <li>use jQuery instead pure Javascript - just take me less time to program</li>
+                    <li>apple website like search effects - not all UI details but it close</li>
+                    <li>make mini grid with display:inline-block as YUI </li>
+                    <li>check only for CHROMIUN UBUNTU version 48 </li>
+                </ol>
+            </div>
+        </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script>
+            "use strict";
+            /*
+             var elBtnOpen = document.querySelector('.my-btn-open');
+             var elSearch  = document.querySelector('.my-search');
+             elBtnOpen.addEventListener("click", function(){
+             elSearch.className += " my-animation1";
+             });*/
+            var elBtnOpen = $('.my-btn-open');
+            var elBtnClose = $('.my-btn-close');
+            var elSearchInput = $('.my-search-input');
+            var elSearch = $('.my-search');
+            var elNav = $('.my-nav');
+            var elNavItems = $('.my-nav-item');
+            var elNavItem_Width = $(elNavItems[0]).width();
+            var is_open = false;
+            //open search
+            elBtnOpen.on('click', function () {
+                if (is_open) {
+                    return false;
+                }
+                var len = elNavItems.length;
+                $(elNavItems.get().reverse()).each(function (index) {
+                    var self = this;
+                    setTimeout(function () {
+                        $(self).animate({"opacity": 0}, 350, function () {
+                            if ((index + 1) == len) {
+                                elNavItems.each(function () {
+                                    $(this).css("display", "none");
+                                });
+                                elSearch.css("padding-left", "4%").css("display", "inline-block").css("opacity", 1);
+                                elSearchInput.fadeIn(50);
+                                elSearch.animate({
+                                    "padding-left": 0
+                                }, 500, function () {
+                                    elBtnClose.fadeIn();
+                                    $('.my-search-input').focus();
+                                });
+                            }
+                        });
+                    }, 50 * index);
+                });
+                is_open = true;
+                return false;
+            });
+            //close search
+            elBtnClose.on('click', function () {
+                if (!is_open) {
+                    return false;
+                }
+                elNavItems.each(function () {
+                    elBtnClose.css('display', 'none');
+                    elSearchInput.css('display', 'none');
+                    $(this).css("width", $(this).width() + "px").css("font-size", "20%").css('display', 'inline-block').css("opacity", 0);
+                }).promise().done(function () {
+                    elNavItems.each(function () {
+                        $(this).animate({opacity: 1, "font-size": "100%"}, 1000, function () {
+                        }).promise().done(function () {
+                            elNavItems.each(function () {
+                                $(this).css("width", "auto");
+                            });
+                        });
+                    });
+                });
+                is_open = false;
+                return false;
+            });
+        </script>
+    </body>
+</html>
